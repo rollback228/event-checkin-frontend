@@ -1,0 +1,26 @@
+version: '3.8'
+
+services:
+  event-web-admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "4500:4500"
+    environment:
+      - NEXT_DISABLE_ESLINT=1
+      - API_BASE_URL=${API_BASE_URL}
+      - VITE_ENVIRONMENT=production
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://14.225.27.206:4500/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    networks:
+      - bni-network
+
+networks:
+  bni-network:
+    driver: bridge
