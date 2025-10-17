@@ -117,36 +117,36 @@ export default function QRScanner({ eventId, isOpen, onClose, onCheckInSuccess }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg">
+      <DialogContent className="w-full max-w-lg sm:max-w-lg mx-auto p-3 sm:p-6">
         <DialogHeader>
-          <DialogTitle>Quét Mã QR Check-in</DialogTitle>
-          <DialogDescription>
+          <DialogTitle className="text-lg sm:text-xl">Quét Mã QR Check-in</DialogTitle>
+          <DialogDescription className="text-xs sm:text-sm">
             Quét mã QR của khách mời để check-in
           </DialogDescription>
         </DialogHeader>
 
         {!scanResult ? (
-          <div className="space-y-4">
-            <div id="qr-reader" className="w-full"></div>
+          <div className="space-y-3 sm:space-y-4">
+            <div id="qr-reader" className="w-full max-h-[300px] sm:max-h-[400px]"></div>
             {error && (
-              <div className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">
+              <div className="text-xs sm:text-sm text-red-600 bg-red-50 p-2 sm:p-3 rounded-lg">
                 {error}
               </div>
             )}
           </div>
         ) : (
-          <div className="space-y-4 py-4">
-            <div className={`border-2 rounded-lg p-6 space-y-3 ${scanResult.checkedIn ? 'bg-orange-50 border-orange-500' : 'bg-green-50 border-green-500'}`}>
-              <div className={`flex items-center gap-2 font-semibold text-lg ${scanResult.checkedIn ? 'text-orange-700' : 'text-green-700'}`}>
-                <CheckCircle className="h-5 w-5" />
-                {scanResult.checkedIn ? 'Đã check-in trước đó' : 'Tìm thấy khách mời!'}
+          <div className="space-y-3 sm:space-y-4 py-2 sm:py-4">
+            <div className={`border-2 rounded-lg p-3 sm:p-6 space-y-2 sm:space-y-3 ${scanResult.checkedIn ? 'bg-orange-50 border-orange-500' : 'bg-green-50 border-green-500'}`}>
+              <div className={`flex items-center gap-2 font-semibold text-base sm:text-lg ${scanResult.checkedIn ? 'text-orange-700' : 'text-green-700'}`}>
+                <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 flex-shrink-0" />
+                <span className="break-words">{scanResult.checkedIn ? 'Đã check-in trước đó' : 'Tìm thấy khách mời!'}</span>
               </div>
-              <div className="space-y-2 text-sm">
-                <p><strong>Họ tên:</strong> {scanResult.fullName}</p>
-                <p><strong>Tổ chức:</strong> {scanResult.organization}</p>
-                <p><strong>SĐT:</strong> {scanResult.phone}</p>
+              <div className="space-y-1 sm:space-y-2 text-xs sm:text-sm">
+                <p className="break-words"><strong>Họ tên:</strong> {scanResult.fullName}</p>
+                <p className="break-words"><strong>Tổ chức:</strong> {scanResult.organization}</p>
+                <p className="break-words"><strong>SĐT:</strong> {scanResult.phone}</p>
                 {scanResult.checkInTime && (
-                  <p className="text-orange-600 font-semibold">
+                  <p className="text-orange-600 font-semibold break-words">
                     ⏰ Thời gian check-in: {scanResult.checkInTime}
                   </p>
                 )}
@@ -154,7 +154,7 @@ export default function QRScanner({ eventId, isOpen, onClose, onCheckInSuccess }
             </div>
 
             {error && (
-              <div className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">
+              <div className="text-xs sm:text-sm text-red-600 bg-red-50 p-2 sm:p-3 rounded-lg">
                 {error}
               </div>
             )}
@@ -162,7 +162,8 @@ export default function QRScanner({ eventId, isOpen, onClose, onCheckInSuccess }
             <Button
               onClick={handleConfirmCheckIn}
               disabled={loading || scanResult.checkedIn}
-              className="w-full"
+              className="w-full text-sm sm:text-base"
+              size="sm"
             >
               {loading ? 'Đang xử lý...' : scanResult.checkedIn ? 'Đã Check-in' : 'Xác Nhận Check-in'}
             </Button>

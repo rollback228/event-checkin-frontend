@@ -71,49 +71,56 @@ export default function EventDetailPage() {
   const eventName = eventId?.split('_')[0] || 'Sự kiện';
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center gap-4">
+    <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 w-full">
+      <div className="container mx-auto px-3 sm:px-4 py-4 sm:py-8 max-w-7xl w-full">
+        <div className="mb-4 sm:mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 sm:gap-4 w-full sm:w-auto">
             <Button
               variant="outline"
+              size="sm"
               onClick={() => router.push('/')}
+              className="w-full sm:w-auto"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Quay lại
             </Button>
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">{eventName}</h1>
-              <p className="text-sm text-gray-600 mt-1">Mã sự kiện: {eventId}</p>
+            <div className="flex-1 sm:flex-none">
+              <h1 className="text-xl sm:text-3xl font-bold text-gray-900 break-words">{eventName}</h1>
+              <p className="text-xs sm:text-sm text-gray-600 mt-1 break-words">Mã sự kiện: {eventId}</p>
             </div>
           </div>
-          
-          <div className="flex gap-2">
+
+          <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
             <Button
               onClick={() => setShowScanner(true)}
-              size="lg"
-              className="bg-green-600 hover:bg-green-700"
+              size="sm"
+              className="bg-green-600 hover:bg-green-700 w-full sm:w-auto"
             >
-              <Camera className="w-5 h-5 mr-2" />
-              Quét QR Check-in
+              <Camera className="w-4 h-4 mr-2" />
+              <span className="hidden sm:inline">Quét QR Check-in</span>
+              <span className="sm:hidden">Quét QR</span>
             </Button>
             <Button
               onClick={() => handleDownloadFile('xlsx')}
               disabled={downloading}
-              size="lg"
+              size="sm"
               variant="outline"
+              className="w-full sm:w-auto"
             >
-              <Download className="w-5 h-5 mr-2" />
-              {downloading ? 'Đang tải...' : 'Tải Excel'}
+              <Download className="w-4 h-4 mr-1" />
+              <span className="hidden sm:inline">{downloading ? 'Đang tải...' : 'Tải Excel'}</span>
+              <span className="sm:hidden">{downloading ? 'Tải...' : 'Excel'}</span>
             </Button>
             <Button
               onClick={() => handleDownloadFile('csv')}
               disabled={downloading}
-              size="lg"
+              size="sm"
               variant="outline"
+              className="w-full sm:w-auto"
             >
-              <Download className="w-5 h-5 mr-2" />
-              {downloading ? 'Đang tải...' : 'Tải CSV'}
+              <Download className="w-4 h-4 mr-1" />
+              <span className="hidden sm:inline">{downloading ? 'Đang tải...' : 'Tải CSV'}</span>
+              <span className="sm:hidden">{downloading ? 'Tải...' : 'CSV'}</span>
             </Button>
           </div>
         </div>

@@ -53,35 +53,35 @@ export default function UploadForm({ onUploadSuccess }: UploadFormProps) {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Upload Danh Sách Sự Kiện</CardTitle>
-        <CardDescription>
+      <CardHeader className="p-3 sm:p-6">
+        <CardTitle className="text-lg sm:text-2xl">Upload Danh Sách Sự Kiện</CardTitle>
+        <CardDescription className="text-xs sm:text-sm">
           Chọn file Excel (.xlsx, .xls) chứa danh sách khách mời
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="flex items-center gap-4">
+      <CardContent className="p-3 sm:p-6">
+        <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-4">
             <input
               type="file"
               accept=".xlsx,.xls"
               onChange={handleFileChange}
-              className="flex-1 text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+              className="flex-1 text-xs sm:text-sm text-gray-500 file:mr-2 sm:file:mr-4 file:py-1 sm:file:py-2 file:px-2 sm:file:px-4 file:rounded-lg file:border-0 file:text-xs sm:file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer"
             />
-            <Button type="submit" disabled={loading || !file}>
-              <Upload className="mr-2 h-4 w-4" />
+            <Button type="submit" disabled={loading || !file} size="sm" className="w-full sm:w-auto">
+              <Upload className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
               {loading ? 'Đang tải...' : 'Upload'}
             </Button>
           </div>
-          
+
           {error && (
-            <div className="text-sm text-red-600 bg-red-50 p-3 rounded-lg">
+            <div className="text-xs sm:text-sm text-red-600 bg-red-50 p-2 sm:p-3 rounded-lg break-words">
               {error}
             </div>
           )}
-          
+
           {file && (
-            <div className="text-sm text-gray-600">
+            <div className="text-xs sm:text-sm text-gray-600 break-words">
               File đã chọn: <strong>{file.name}</strong>
             </div>
           )}

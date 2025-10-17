@@ -47,8 +47,8 @@ export default function EventList({ refreshTrigger }: EventListProps) {
   if (loading) {
     return (
       <Card>
-        <CardContent className="p-6">
-          <p className="text-center text-gray-500">Đang tải...</p>
+        <CardContent className="p-3 sm:p-6">
+          <p className="text-center text-gray-500 text-sm sm:text-base">Đang tải...</p>
         </CardContent>
       </Card>
     );
@@ -57,8 +57,8 @@ export default function EventList({ refreshTrigger }: EventListProps) {
   if (events.length === 0) {
     return (
       <Card>
-        <CardContent className="p-6">
-          <p className="text-center text-gray-500">
+        <CardContent className="p-3 sm:p-6">
+          <p className="text-center text-gray-500 text-sm sm:text-base">
             Chưa có sự kiện nào. Hãy upload file Excel để bắt đầu!
           </p>
         </CardContent>
@@ -68,32 +68,35 @@ export default function EventList({ refreshTrigger }: EventListProps) {
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Danh Sách Sự Kiện</CardTitle>
-        <CardDescription>
+      <CardHeader className="p-3 sm:p-6">
+        <CardTitle className="text-lg sm:text-2xl">Danh Sách Sự Kiện</CardTitle>
+        <CardDescription className="text-xs sm:text-sm">
           Chọn sự kiện để quản lý danh sách khách mời
         </CardDescription>
       </CardHeader>
-      <CardContent>
-        <div className="space-y-3">
+      <CardContent className="p-3 sm:p-6">
+        <div className="space-y-2 sm:space-y-3">
           {events.map((event) => (
             <div
               key={event.eventId}
-              className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors"
+              className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-3 sm:p-4 border rounded-lg hover:bg-gray-50 transition-colors gap-3 sm:gap-4"
             >
-              <div className="flex-1">
-                <h3 className="font-semibold text-lg">{event.eventName}</h3>
-                <p className="text-sm text-gray-500 flex items-center gap-2 mt-1">
-                  <Calendar className="h-4 w-4" />
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-base sm:text-lg break-words">{event.eventName}</h3>
+                <p className="text-xs sm:text-sm text-gray-500 flex items-center gap-2 mt-1 break-words">
+                  <Calendar className="h-3 w-3 sm:h-4 sm:w-4 flex-shrink-0" />
                   {formatDate(event.uploadDate)}
                 </p>
               </div>
               <Button
                 onClick={() => router.push(`/events/${event.eventId}`)}
                 variant="default"
+                size="sm"
+                className="w-full sm:w-auto"
               >
-                <Users className="mr-2 h-4 w-4" />
-                Xem Chi Tiết
+                <Users className="mr-2 h-3 w-3 sm:h-4 sm:w-4" />
+                <span className="hidden sm:inline">Xem Chi Tiết</span>
+                <span className="sm:hidden">Xem</span>
               </Button>
             </div>
           ))}
