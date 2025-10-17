@@ -2,12 +2,12 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter, useParams } from 'next/navigation';
-import { ArrowLeft, Camera } from 'lucide-react';
+import { ArrowLeft, Camera, Download } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import GuestTable from '@/components/GuestTable';
 import QRScanner from '@/components/QRScanner';
-import { getEventGuests, Guest } from '@/lib/api';
+import { getEventGuests, Guest, downloadEventFile } from '@/lib/api';
 
 export default function EventDetailPage() {
   const params = useParams();
@@ -18,6 +18,7 @@ export default function EventDetailPage() {
   const [loading, setLoading] = useState(true);
   const [showScanner, setShowScanner] = useState(false);
   const [error, setError] = useState('');
+  const [downloading, setDownloading] = useState(false);
 
   const loadGuests = async () => {
     setLoading(true);
@@ -48,6 +49,25 @@ export default function EventDetailPage() {
     alert(`Check-in thành công cho ${guestData.fullName}!`);
   };
 
+  const handleDownloadFile = async (format: 'csv' | 'xlsx') => {
+    setDownloading(true);
+    try {
+      const blob = await downloadEventFile(eventId, format);
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${eventName}_${new Date().toISOString().split('T')[0]}.${format}`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (err: any) {
+      alert('Lỗi khi tải file: ' + (err.response?.data?.message || err.message));
+    } finally {
+      setDownloading(false);
+    }
+  };
+
   const eventName = eventId?.split('_')[0] || 'Sự kiện';
 
   return (
@@ -68,14 +88,34 @@ export default function EventDetailPage() {
             </div>
           </div>
           
-          <Button
-            onClick={() => setShowScanner(true)}
-            size="lg"
-            className="bg-green-600 hover:bg-green-700"
-          >
-            <Camera className="w-5 h-5 mr-2" />
-            Quét QR Check-in
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => setShowScanner(true)}
+              size="lg"
+              className="bg-green-600 hover:bg-green-700"
+            >
+              <Camera className="w-5 h-5 mr-2" />
+              Quét QR Check-in
+            </Button>
+            <Button
+              onClick={() => handleDownloadFile('xlsx')}
+              disabled={downloading}
+              size="lg"
+              variant="outline"
+            >
+              <Download className="w-5 h-5 mr-2" />
+              {downloading ? 'Đang tải...' : 'Tải Excel'}
+            </Button>
+            <Button
+              onClick={() => handleDownloadFile('csv')}
+              disabled={downloading}
+              size="lg"
+              variant="outline"
+            >
+              <Download className="w-5 h-5 mr-2" />
+              {downloading ? 'Đang tải...' : 'Tải CSV'}
+            </Button>
+          </div>
         </div>
 
         {error && (

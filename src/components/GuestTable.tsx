@@ -57,6 +57,7 @@ export default function GuestTable({ guests, onRefresh }: GuestTableProps) {
               <TableHead>SĐT</TableHead>
               <TableHead>Nhân viên phụ trách</TableHead>
               <TableHead className="text-center">Trạng thái</TableHead>
+              <TableHead>Thời gian Check-in</TableHead>
               <TableHead className="text-center">QR Code</TableHead>
             </TableRow>
           </TableHeader>
@@ -80,6 +81,13 @@ export default function GuestTable({ guests, onRefresh }: GuestTableProps) {
                       <Circle className="w-3 h-3 mr-1" />
                       Chưa check-in
                     </Badge>
+                  )}
+                </TableCell>
+                <TableCell className="text-sm">
+                  {guest.checkInTime ? (
+                    <span className="text-green-600 font-medium">{guest.checkInTime}</span>
+                  ) : (
+                    <span className="text-gray-400">-</span>
                   )}
                 </TableCell>
                 <TableCell className="text-center">

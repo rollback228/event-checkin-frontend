@@ -25,6 +25,7 @@ export interface Guest {
   staffCare: string;
   checkedIn: boolean;
   encodedPhone: string;
+  checkInTime?: string | null;
 }
 
 export interface ApiResponse<T> {
@@ -73,6 +74,15 @@ export const confirmCheckIn = async (eventId: string, encodedPhone: string): Pro
   const response = await api.post('/checkin', {
     eventId,
     encodedPhone,
+  });
+  return response.data;
+};
+
+// Download event guests file
+export const downloadEventFile = async (eventId: string, format: 'csv' | 'xlsx' = 'csv'): Promise<Blob> => {
+  const response = await api.get(`/events/${eventId}/download`, {
+    params: { format },
+    responseType: 'blob',
   });
   return response.data;
 };

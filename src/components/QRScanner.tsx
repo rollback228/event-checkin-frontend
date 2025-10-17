@@ -136,18 +136,18 @@ export default function QRScanner({ eventId, isOpen, onClose, onCheckInSuccess }
           </div>
         ) : (
           <div className="space-y-4 py-4">
-            <div className="bg-green-50 border-2 border-green-500 rounded-lg p-6 space-y-3">
-              <div className="flex items-center gap-2 text-green-700 font-semibold text-lg">
+            <div className={`border-2 rounded-lg p-6 space-y-3 ${scanResult.checkedIn ? 'bg-orange-50 border-orange-500' : 'bg-green-50 border-green-500'}`}>
+              <div className={`flex items-center gap-2 font-semibold text-lg ${scanResult.checkedIn ? 'text-orange-700' : 'text-green-700'}`}>
                 <CheckCircle className="h-5 w-5" />
-                Tìm thấy khách mời!
+                {scanResult.checkedIn ? 'Đã check-in trước đó' : 'Tìm thấy khách mời!'}
               </div>
               <div className="space-y-2 text-sm">
                 <p><strong>Họ tên:</strong> {scanResult.fullName}</p>
                 <p><strong>Tổ chức:</strong> {scanResult.organization}</p>
                 <p><strong>SĐT:</strong> {scanResult.phone}</p>
-                {scanResult.checkedIn && (
+                {scanResult.checkInTime && (
                   <p className="text-orange-600 font-semibold">
-                    ⚠️ Đã check-in trước đó
+                    ⏰ Thời gian check-in: {scanResult.checkInTime}
                   </p>
                 )}
               </div>
